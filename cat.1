@@ -1,0 +1,43 @@
+.TH CAT 1 "23 APril 2015" "version 1.0"
+.SH NAME
+cat \- concatenate files to standard output
+.SH SYNOPSIS
+.B cat
+[
+.I file
+]...
+.SH DESCRIPTION
+.B cat
+reads each
+.I file
+in sequence and writes it on the standard output.
+
+Cat takes
+.I no flags,
+although "-" can be passed to represent standard input.
+.SH EXAMPLES
+.P 
+cat [
+.I
+-
+]
+.RS
+direct standard input to standard output
+.PP
+.RE
+cat file
+.RS
+print file to standard output
+.PP
+.RE
+cat file1 \- file2 >file3 
+.RS
+concatenate file1, followed by the contents of standard input, followed by file2, to file3.
+
+.SH SEE ALSO
+.BR sh (1P)
+.SH DIAGNOSTICS
+.B cat
+exits with the number of arguments that caused errors. 
+.SH BUGS
+There are none.
