@@ -49,7 +49,7 @@ yuuko@navi ~/git/cat $ du -sh ~/Downloads/`ls -S ~/Downloads | sed q`
 537M	/home/yuuko/Downloads/9front-4308.4e3f4e43246e.iso
 
 ```
-GNU cat
+### GNU cat
 ```
 yuuko@navi ~/git/cat $ time cat ~/Downloads/9front-4308.4e3f4e43246e.iso >/dev/null
 
@@ -57,7 +57,7 @@ real	0m0.483s
 user	0m0.009s
 sys	0m0.472s
 ```
-My cat
+### My cat
 ```
 yuuko@navi ~/git/cat $ time ./cat ~/Downloads/9front-4308.4e3f4e43246e.iso >/dev/null
 
