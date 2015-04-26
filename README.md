@@ -43,7 +43,7 @@ yuuko@navi ~/git/cat $ valgrind ./cat cat.c nonexistent_file cat.c >/dev/null
 ==2546== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 ```
 As you can see, mine blows GNU's out of the water.
-## speed
+## Speed
 ```
 yuuko@navi ~/git/cat $ du -sh ~/Downloads/`ls -S ~/Downloads | sed q`
 537M	/home/yuuko/Downloads/9front-4308.4e3f4e43246e.iso
