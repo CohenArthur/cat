@@ -9,20 +9,24 @@ int cat(const char *path)
 {
 	FILE *fp = strcmp(path, "-") ? fopen(path, "r") : stdin;
 	char *buf;
+	int errbuf = errno, fd = fileno(fp);
 	struct stat fs;
 	if (!fp)
 		return 1;
-	fstat(fileno(fp), &fs);
-	if (posix_memalign((void **)&buf, sysconf(_SC_PAGESIZE), fs.st_blksize))
+	fstat(fd, &fs);
+	size_t buflen = 16 * fs.st_blksize;
+	if (posix_memalign((void **)&buf, sysconf(_SC_PAGESIZE), buflen))
 		return 1;
-	if (errno = isatty(fileno(fp)) ? errno : 0) {
-		while (fgets(buf, (int)fs.st_blksize - 1, stdin))
+	if (isatty(fd)) { /* line-buffer if tty */
+		while (fgets(buf, (int)buflen - 1, stdin))
 			fputs(buf, stdout);
-	} else while (!feof(fp)) 
-		fwrite(buf, 1, fread(buf, 1, fs.st_blksize, fp), stdout);
+	} else {
+		errno = errbuf; /* isatty always sets errno on false... */
+		while (read(fd, buf, buflen)) 
+			write(fileno(stdout), buf, buflen);
+	}
 	if (fp == stdin) clearerr(fp);
-	else fclose(fp);
-		
+	else fclose(fp); /* we want stdin open for multiple reads */		
 	free(buf);
 	return 0;
 }
@@ -33,11 +37,9 @@ int main(int argc, char *argv[])
 	
 	if (argc < 2)
 		return cat("-");
-	while (++i < argc) {
-		errors += cat(argv[i]);
-		if (errno)
-			fprintf(stderr, "%s: %s: %s\n", 
-			        argv[0], argv[i], strerror(errno));
+	while (++i < argc) if (cat(argv[i])) {
+		fprintf(stderr, "%s: %s: %s\n", argv[0], argv[i], strerror(errno));
+		errors++;
 	}
 	return errors;
 }
