@@ -3,7 +3,8 @@ A simple cat implementation with a GNU Fast® aligned buffer
 
 The source code should be relatively self-explanatory.
 
-GNU's implementation:
+## Memory footprint
+### GNU cat
 ```
 yuuko@navi ~/git/cat $ valgrind cat cat.c nonexistent_file cat.c >/dev/null
 ==2558== Memcheck, a memory error detector
@@ -22,7 +23,7 @@ cat: nonexistent_file: No such file or directory
 ==2558== For counts of detected and suppressed errors, rerun with: -v
 ==2558== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 ```
-My implementation:
+### My cat
 ```
 yuuko@navi ~/git/cat $ valgrind ./cat cat.c nonexistent_file cat.c >/dev/null
 ==2546== Memcheck, a memory error detector
@@ -41,14 +42,14 @@ yuuko@navi ~/git/cat $ valgrind ./cat cat.c nonexistent_file cat.c >/dev/null
 ==2546== For counts of detected and suppressed errors, rerun with: -v
 ==2546== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 ```
-
-As you can see, I have GNU cat beaten in memory footprint. However,
+As you can see, mine blows GNU's out of the water.
+## speed
 ```
 yuuko@navi ~/git/cat $ du -sh ~/Downloads/`ls -S ~/Downloads | sed q`
 537M	/home/yuuko/Downloads/9front-4308.4e3f4e43246e.iso
 
 ```
-GNU's implementation:
+GNU cat
 ```
 yuuko@navi ~/git/cat $ time cat ~/Downloads/9front-4308.4e3f4e43246e.iso >/dev/null
 
@@ -56,12 +57,12 @@ real	0m0.483s
 user	0m0.009s
 sys	0m0.472s
 ```
-My implementation:
+My cat
 ```
-yuuko@navi ~/git/cat »»» time ./cat ~/Downloads/9front-4308.4e3f4e43246e.iso >/dev/null
+yuuko@navi ~/git/cat $ time ./cat ~/Downloads/9front-4308.4e3f4e43246e.iso >/dev/null
 
 real	0m0.482s
 user	0m0.015s
 sys	0m0.46s
 ```
-As you can see, mine and GNU's are about neck-and-neck for speed. I get results like these pretty consistently, with both compiled at -O2.
+Speeds are consistently neck-and-neck.
