@@ -29,12 +29,12 @@ int cat(const char *path)
 
 int main(int argc, char *argv[])
 {
-	int i = 1, errors = 0;
+	int i = 0, errors = 0;
 	
 	if (argc < 2)
 		return cat("-");
-	while (i < argc) {
-		errors += cat(argv[i++]);
+	while (++i < argc) {
+		errors += cat(argv[i]);
 		if (errno)
 			fprintf(stderr, "%s: %s: %s\n", 
 			        argv[0], argv[i], strerror(errno));
