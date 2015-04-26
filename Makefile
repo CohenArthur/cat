@@ -5,3 +5,5 @@ all: cat
 %: %.c Makefile
 	@echo "CC	$<	$@"
 	@${CC} ${CFLAGS} $< -o $@
+clean:
+	rm cat
