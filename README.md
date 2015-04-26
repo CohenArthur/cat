@@ -2,8 +2,10 @@
 A simple cat implementation with a GNU Fast® aligned buffer
 
 The source code should be relatively self-explanatory.
+
+GNU's implementation:
 ```
-yuuko@navi ~/git/cat »»» valgrind cat cat.c nonexistent_file cat.c >/dev/null
+yuuko@navi ~/git/cat $ valgrind cat cat.c nonexistent_file cat.c >/dev/null
 ==2558== Memcheck, a memory error detector
 ==2558== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
 ==2558== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
@@ -19,7 +21,10 @@ cat: nonexistent_file: No such file or directory
 ==2558== 
 ==2558== For counts of detected and suppressed errors, rerun with: -v
 ==2558== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-yuuko@navi ~/git/cat »»» valgrind ./cat cat.c nonexistent_file cat.c >/dev/null
+```
+My implementation
+```
+yuuko@navi ~/git/cat $ valgrind ./cat cat.c nonexistent_file cat.c >/dev/null
 ==2546== Memcheck, a memory error detector
 ==2546== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
 ==2546== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
@@ -36,3 +41,26 @@ yuuko@navi ~/git/cat »»» valgrind ./cat cat.c nonexistent_file cat.c >/dev/nu
 ==2546== For counts of detected and suppressed errors, rerun with: -v
 ==2546== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 ```
+
+As you can see, I have GNU cat beaten in memory footprint. However,
+```
+yuuko@navi ~/Downloads $ du -sh 9front-4308.4e3f4e43246e.iso 
+537M	9front-4308.4e3f4e43246e.iso
+```
+GNU's implementation:
+```
+yuuko@navi ~/Downloads »»» time cat 9front-4308.4e3f4e43246e.iso >/dev/null
+
+real	0m0.479s
+user	0m0.010s
+sys	0m0.467s
+```
+My implementation:
+```
+yuuko@navi ~/Downloads »»» time cat 9front-4308.4e3f4e43246e.iso >/dev/null
+
+real	0m0.479s
+user	0m0.010s
+sys	0m0.467s
+```
+GNU still has me beat on speed. I get results like these pretty consistently. 
