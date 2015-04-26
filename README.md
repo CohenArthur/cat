@@ -57,10 +57,10 @@ sys	0m0.467s
 ```
 My implementation:
 ```
-yuuko@navi ~/Downloads »»» time cat 9front-4308.4e3f4e43246e.iso >/dev/null
+yuuko@navi ~/Downloads »»» time ~/git/cat/cat 9front-4308.4e3f4e43246e.iso >/dev/null
 
-real	0m0.479s
-user	0m0.010s
-sys	0m0.467s
+real	0m0.703s
+user	0m0.246s
+sys	0m0.455s
 ```
-GNU still has me beat on speed. I get results like these pretty consistently. 
+GNU still has me beat on speed. I get results like these pretty consistently, with both compiled at GCC -O2.
