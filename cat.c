@@ -9,16 +9,16 @@ int cat(const char *path)
 {
 	FILE *fp = strcmp(path, "-") ? fopen(path, "r") : stdin;
 	char *buf;
-	int errbuf = errno, fd = fileno(fp);
+	int fd = fileno(fp), errbuf = errno;
 	struct stat fs;
+	
 	if (!fp)
 		return 1;
 	fstat(fd, &fs);
 	size_t buflen = 16 * fs.st_blksize;
-	if (posix_memalign((void **)&buf, sysconf(_SC_PAGESIZE), buflen))
-		return 1;
+	if (posix_memalign((void **)&buf, sysconf(_SC_PAGESIZE), buflen)) return 1;
 	if (isatty(fd)) { /* line-buffer if tty */
-		while (fgets(buf, (int)buflen - 1, stdin))
+		while (fgets(buf, (int)buflen - 1, fp))
 			fputs(buf, stdout);
 	} else {
 		errno = errbuf; /* isatty always sets errno on false... */
