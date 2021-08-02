@@ -1,2 +1,6 @@
+# Ignore binaries
 cat
 static_cat
+
+# Ignore tags
+tags
